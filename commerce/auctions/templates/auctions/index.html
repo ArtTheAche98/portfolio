@@ -1,0 +1,30 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<div class="container">
+    <h1>Active Listings</h1>
+    {% for listing in listings %}
+        <div class="listing-item">
+            <h2>{{ listing.title }}</h2>
+            <p>{{ listing.description }}</p>
+            <p>Current Price: ${{ listing.current_price }}</p>
+            {% if listing.image_url %}
+                <div class="image-container">
+                    <img style width="auto" height="300px" object-fit="cover" src="{{ listing.image_url }}" alt="{{ listing.title }}" class="image-thumbnail">
+                </div>
+            {% endif %}
+            
+            <a href="{% url 'auction_detail' listing.id %}" class="btn btn-primary">View Listing</a>
+            {% if user.is_authenticated %}
+            <form action="{% url 'add_to_watchlist' listing.id %}" method="POST" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-secondary">Add to Watchlist</button>
+            </form>
+            {% endif %}
+        </div>
+        <hr>
+    {% empty %}
+        <p>No active listings available.</p>
+    {% endfor %}
+</div>
+{% endblock %}
