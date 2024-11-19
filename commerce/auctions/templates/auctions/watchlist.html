@@ -1,0 +1,24 @@
+{% extends "auctions/layout.html" %}
+
+{% block title %}Your Watchlist{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h2>Your Watchlist</h2>
+    <ul class="list-group">
+        {% for item in watchlist %}
+            <li class="list-group-item">
+                <form action="{% url 'remove_from_watchlist' item.listing.id %}" method="POST" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger btn-sm">Remove from Watchlist</button>
+                </form>
+                <a href="{% url 'auction_detail' item.listing.id %}">{{ item.listing.title }}</a>
+                <span class="badge badge-secondary float-right">${{ item.listing.current_price }}</span>
+            </li>
+        {% empty %}
+            <li class="list-group-item">Your watchlist is empty.</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'index' %}" class="btn btn-secondary mt-3">Back to Home</a>
+</div>
+{% endblock %}
