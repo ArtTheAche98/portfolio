@@ -1,0 +1,45 @@
+{% extends 'translator/layout.html' %}
+
+{% block content %}
+
+<div class="welcome-section">
+    <h1>Welcome to Medical Translator Web App</h1>
+    <p>Translate medical terms, get accurate definitions, and visualize with images.</p>
+    <a href="{% url 'translate_term' %}" class="btn btn-primary btn-lg">Get Started</a>
+</div>
+
+<div class="features">
+    <h2>Features</h2>
+    <div class="cards-container">
+        <div class="card">
+            <h3>Translate Terms</h3>
+            <p>Instantly translate terms between different languages.</p>
+        </div>
+        <div class="card">
+            <h3>Medical Definitions</h3>
+            <p>Get accurate and detailed definitions for your queries.</p>
+        </div>
+        <div class="card">
+            <h3>Relevant Images</h3>
+            <p>Find related images to improve your understanding.</p>
+        </div>
+    </div>
+</div>
+
+<div class="search-section">
+    <h2>Search for a Term to Get Started</h2>
+    <form action="{% url 'translate_term' %}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <input type="text" name="term" class="form-control" placeholder="Enter a term...">
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+</div>
+
+<footer>
+    <p>&copy; 2025 Medical Translator Web App - All Rights Reserved</p>
+    <p><a href="mailto:artak.matiniani@icloud.com">Contact Us</a></p>
+</footer>
+
+{% endblock %}
