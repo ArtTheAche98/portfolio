@@ -1,0 +1,22 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+    {%  if user.is_authenticated %}
+        <div class="container">
+            <h2>Create Post</h2>
+            <form action="{% url 'create_post' %}" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <textarea class="form-control" name="content" placeholder="What's on your mind?"></textarea>
+                </div>
+                <div class="form-group">
+                    <input name="image_url" type="url" class="form-control" id="image_url" placeholder="Image URL">
+                </div>
+                <input class="btn btn-primary" type="submit" value="Post">
+            </form>
+        </div>
+        Signed in as <strong>{{ user.username }}.</strong>
+    {%  else %}
+        <p class="text-muted">Please <a href="{% url 'login' %}">log in</a> to create a post.</p>
+    {%  endif %}
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends "network/layout.html" %}
+
+{% block title %}Following{% endblock %}
+
+{% block body %}
+    <h2>Posts from People You Follow</h2>
+    {% for post in page_obj %}
+        <div class="post">
+        <a class="nav-link" href="{% url 'profile' post.author %}">
+            <strong>{{ post.author }}</strong>
+        </a>
+        <p>{{ post.content }}</p>
+        <img src="{{ post.image_url }}" alt="Post Image" class="image-thumbnail">
+            <p><span id="likes-count-{{ post.post_id }}">{{ post.likes.count }}</span></p>
+            <button class="like-btn btn btn-primary" data-post-id="{{ post.post_id }}">
+                {%  if user in post.likes.all %}
+                    ❤️
+                {% else %}
+                    🤍
+                {% endif %}
+            </button>
+        <small class="text-muted">{{ post.created_at }}</small>
+        </div>
+    {% empty %}
+        <p>You are not following anyone, or they haven't posted anything yet.</p>
+    {%  endfor %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.like-btn').forEach(button => {
+                button.addEventListener('click', () => {
+                    const postId = button.dataset.postId;
+
+                    const likeCountElement = document.querySelector(`#likes-count-${postId}`);
+                    fetch(`/like/${postId}/`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': getCookie('csrftoken'),
+                        },
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            button.textContent = data.liked ? ' ❤️' : ' 🤍 ';
+                            likeCountElement.textContent = `${data.likes_count} likes`;
+                        } else {
+                            console.error(data.error || "An error occured");
+                        }
+                    });
+                });
+            });
+        });
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.startsWith(name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
+
+    <ul class="pagination">
+        {% if page_obj.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+        {% endif %}
+        <li class="page-item active"><span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span></li>
+        {% if page_obj.has_next %}
+        <li class="page-item"><a class ="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+        {%  endif %}
+    </ul>
+
+{% endblock %}

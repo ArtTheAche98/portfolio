@@ -1,0 +1,203 @@
+{% extends "network/layout.html" %}
+
+{% block title %}{{ profile.user.username }}'s Profile{% endblock %}
+
+{% block body %}
+    <div class="profile-header">
+        <h2>{{ profile.user.username }}</h2>
+        {% if user.profile.picture %}
+            <img src="{{ profile.picture }}" alt="Profile Picture" class="profile-pic">
+        {% endif %}
+
+        <p class="followers-count">{{ profile.followers.count }} Followers | {{ profile.following.count }} Following</p>
+
+        {% if request.user != profile.user %}
+            <form method="POST" id="follow-form" data-username="{{ profile.user.username }}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary" id="follow-btn">
+                    {% if request.user in profile.followers.all %}
+                        Unfollow
+                    {% else %}
+                        Follow
+                    {% endif %}
+                </button>
+            </form>
+        {% endif %}
+    </div>
+
+    <hr>
+
+    <div class="profile-posts">
+        <h3>{{ profile.user.username }}'s Posts</h3>
+        {% for post in posts %}
+            <div class="post">
+                <h5>{{ post.author.username }}</h5>
+                <p class="post-content" data-post-id="{{ post.post_id }}">{{ post.content }}</p>
+                {% if request.user == post.author %}
+                    <button class="edit-post-btn" data-post-id="{{ post.post_id }}">Edit</button>
+                {% endif %}
+                {% if post.image_url %}
+                    <img src="{{ post.image_url }}" alt="Post Image" class="image-thumbnail">
+                {% endif %}
+                <p>
+                    <span id="likes-count-{{ post.post_id }}">{{ post.likes.count }}</span> likes
+                </p>
+                <small class="text-muted">{{ post.created_at }}</small>
+            </div>
+        {% empty %}
+            <p>This user has no posts yet.</p>
+        {% endfor %}
+
+        <ul class="pagination">
+            {% if posts.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ posts.previous_page_number }}">Previous</a>
+                </li>
+            {% endif %}
+            <li class="page-item active">
+                <span class="page-link">Page {{ posts.number }} of {{ posts.paginator.num_pages }}</span>
+            </li>
+            {% if posts.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ posts.next_page_number }}">Next</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Handle edit posts
+            const editPostButtons = document.querySelectorAll('.edit-post-btn');
+
+            editPostButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const postId = button.dataset.postId;
+                    const postContentElement = document.querySelector(`.post-content[data-post-id="${postId}"]`);
+                    const originalContent = postContentElement.textContent.trim();
+
+                    // Create a textarea for editing
+                    const textarea = document.createElement('textarea');
+                    textarea.classList.add('form-control');
+                    textarea.value = originalContent;
+
+                    // Replace post content with textarea
+                    postContentElement.innerHTML = '';
+                    postContentElement.appendChild(textarea);
+
+                    // Hide Edit button and create Save/Cancel buttons
+                    button.style.display = 'none';
+                    const saveButton = document.createElement('button');
+                    saveButton.textContent = 'Save';
+                    saveButton.classList.add('btn', 'btn-success', 'save-post-btn');
+
+                    const cancelButton = document.createElement('button');
+                    cancelButton.textContent = 'Cancel';
+                    cancelButton.classList.add('btn', 'btn-secondary', 'cancel-post-btn');
+
+                    const buttonContainer = document.createElement('div');
+                    buttonContainer.classList.add('edit-button-container');
+                    buttonContainer.appendChild(saveButton);
+                    buttonContainer.appendChild(cancelButton);
+                    postContentElement.parentElement.appendChild(buttonContainer);
+
+                    // Save button functionality
+                    saveButton.addEventListener('click', () => {
+                        const updatedContent = textarea.value.trim();
+                        const csrftoken = getCookie('csrftoken');
+
+                        if (!csrftoken) {
+                            console.error('CSRF token missing!');
+                            return;
+                        }
+
+                        fetch(`/edit-post/${postId}/`, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRFToken': csrftoken,
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ content: updatedContent }),
+                        })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error(`HTTP error! Status: ${response.status}`);
+                                }
+                                return response.json();
+                            })
+                            .then(data => {
+                                if (data.success) {
+                                    // Update DOM with new post content
+                                    postContentElement.textContent = updatedContent;
+                                    buttonContainer.remove();
+                                    button.style.display = 'inline-block';
+                                } else {
+                                    console.error(data.error || 'Failed to update post.');
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                            });
+                    });
+
+                    // Cancel button functionality
+                    cancelButton.addEventListener('click', () => {
+                        postContentElement.textContent = originalContent;
+                        buttonContainer.remove();
+                        button.style.display = 'inline-block';
+                    });
+                });
+            });
+
+            // Handle follow/unfollow functionality
+            const followButton = document.getElementById('follow-btn');
+            const followForm = document.getElementById('follow-form');
+
+            if (followButton && followForm) {
+                followForm.addEventListener('submit', (event) => {
+                    event.preventDefault();
+                    const username = followForm.getAttribute('data-username');
+                    const url = `/follow/${username}/`;
+
+                    fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': getCookie('csrftoken'),
+                            'Content-Type': 'application/json',
+                        },
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                followButton.textContent = data.following ? 'Unfollow' : 'Follow';
+                                const followersCountElement = document.querySelector('.followers-count');
+                                const updatedFollowersCount = data.followers_count;
+                                followersCountElement.textContent = `${updatedFollowersCount} Followers | {{ profile.following.count }} Following`;
+                            } else {
+                                console.error(data.error || 'Failed to toggle follow status.');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                });
+            }
+        });
+
+        // Utility to get CSRF token from cookies
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.startsWith(name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
+{% endblock %}
