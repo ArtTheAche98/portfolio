@@ -57,20 +57,29 @@ The automation workflow is powered by the **`schedule`** library:
 ### 1. Prerequisites
 - **Python 3.8+**
 - Chrome browser and [ChromeDriver](https://chromedriver.chromium.org/)
-- Optional: Set up a Python virtual environment (recommended).
+- **Virtual Environment (Recommended)**: It's highly advisable to set up the project in a Python virtual environment to maintain a clean and isolated dependency setup.
 
 ### 2. Installation
 
-Clone the repository and install the required dependencies:
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/ArtTheAche98/TwitterBot.git
+   cd TwitterBot
+   ```
 
-```bash
-git clone <repository_url>
-cd <repository_folder>
-pip install -r requirements.txt
-```
+2. **Set Up Virtual Environment**:
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
+   ```
+
+3. **Install Required Dependencies**:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
 ### 3. Environment Variables
-Create a `.env` file to securely store your credentials and API keys:
+Create a `.env` file in the project root and securely store your credentials and API keys in it:
 
 ```plaintext
 TWITTER_USERNAME=your_twitter_username
@@ -81,7 +90,7 @@ DEEPSEEK_API_KEY=your_deepseek_api_key
 
 ### 4. Running the Bot
 
-Run the bot by executing the following command:
+Start the bot by executing the following command:
 
 ```bash
 python bot.py
@@ -130,14 +139,11 @@ This project was a great learning experience and a practical challenge. It taugh
 - Automation using Selenium.
 - API integration for summarization.
 - Scheduling scripts for long-running automation.
+- Working with VM.
 
 ---
 
-## Key Takeaways
 
-This project reflects a commitment to building useful tools and solving problems efficiently. I hope it serves as a starting point or a source of inspiration for other developers exploring automation projects.
-
----
 
 ## Acknowledgements
 
