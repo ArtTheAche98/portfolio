@@ -1,0 +1,96 @@
+2025-01-25 20:18:31,122 - INFO - ====== WebDriver manager ======
+2025-01-25 20:18:31,230 - INFO - Get LATEST chromedriver version for google-chrome
+2025-01-25 20:18:32,823 - INFO - Get LATEST chromedriver version for google-chrome
+2025-01-25 20:18:33,079 - INFO - There is no [mac64] chromedriver "132.0.6834.110" for browser google-chrome "132.0.6834" in cache
+2025-01-25 20:18:33,088 - INFO - Get LATEST chromedriver version for google-chrome
+2025-01-25 20:18:33,785 - INFO - WebDriver version 132.0.6834.110 selected
+2025-01-25 20:18:33,787 - INFO - Modern chrome version https://storage.googleapis.com/chrome-for-testing-public/132.0.6834.110/mac-arm64/chromedriver-mac-arm64.zip
+2025-01-25 20:18:33,787 - INFO - About to download new driver from https://storage.googleapis.com/chrome-for-testing-public/132.0.6834.110/mac-arm64/chromedriver-mac-arm64.zip
+2025-01-25 20:18:34,161 - INFO - Driver downloading response is 200
+2025-01-25 20:18:36,322 - INFO - Get LATEST chromedriver version for google-chrome
+2025-01-25 20:18:36,617 - INFO - Driver has been saved in cache [/Users/arttheache/.wdm/drivers/chromedriver/mac64/132.0.6834.110]
+2025-01-25 20:18:41,825 - INFO - No cookies found. Proceeding with login.
+2025-01-25 20:19:06,530 - ERROR - Error detecting login status: Message: 
+Stacktrace:
+0   chromedriver                        0x00000001014327b8 cxxbridge1$str$ptr + 2598452
+1   chromedriver                        0x000000010142aff8 cxxbridge1$str$ptr + 2567796
+2   chromedriver                        0x0000000100fcbf0c cxxbridge1$string$len + 88260
+3   chromedriver                        0x0000000101011000 cxxbridge1$string$len + 371128
+4   chromedriver                        0x000000010104b148 cxxbridge1$string$len + 609024
+5   chromedriver                        0x0000000101004e1c cxxbridge1$string$len + 321492
+6   chromedriver                        0x0000000101005a64 cxxbridge1$string$len + 324636
+7   chromedriver                        0x00000001013fd6d4 cxxbridge1$str$ptr + 2381136
+8   chromedriver                        0x00000001014009f4 cxxbridge1$str$ptr + 2394224
+9   chromedriver                        0x00000001013e403c cxxbridge1$str$ptr + 2277048
+10  chromedriver                        0x00000001014012b4 cxxbridge1$str$ptr + 2396464
+11  chromedriver                        0x00000001013d5c04 cxxbridge1$str$ptr + 2218624
+12  chromedriver                        0x000000010141bd60 cxxbridge1$str$ptr + 2505692
+13  chromedriver                        0x000000010141bedc cxxbridge1$str$ptr + 2506072
+14  chromedriver                        0x000000010142ac6c cxxbridge1$str$ptr + 2566888
+15  libsystem_pthread.dylib             0x0000000183d802e4 _pthread_start + 136
+16  libsystem_pthread.dylib             0x0000000183d7b0fc thread_start + 8
+
+2025-01-25 20:19:06,530 - INFO - Not logged in. Attempting to log in...
+2025-01-25 20:19:06,530 - INFO - Logging into Twitter...
+2025-01-25 20:19:49,437 - ERROR - Error detecting login status: Message: 
+Stacktrace:
+0   chromedriver                        0x00000001014327b8 cxxbridge1$str$ptr + 2598452
+1   chromedriver                        0x000000010142aff8 cxxbridge1$str$ptr + 2567796
+2   chromedriver                        0x0000000100fcbf0c cxxbridge1$string$len + 88260
+3   chromedriver                        0x0000000101011000 cxxbridge1$string$len + 371128
+4   chromedriver                        0x000000010104b148 cxxbridge1$string$len + 609024
+5   chromedriver                        0x0000000101004e1c cxxbridge1$string$len + 321492
+6   chromedriver                        0x0000000101005a64 cxxbridge1$string$len + 324636
+7   chromedriver                        0x00000001013fd6d4 cxxbridge1$str$ptr + 2381136
+8   chromedriver                        0x00000001014009f4 cxxbridge1$str$ptr + 2394224
+9   chromedriver                        0x00000001013e403c cxxbridge1$str$ptr + 2277048
+10  chromedriver                        0x00000001014012b4 cxxbridge1$str$ptr + 2396464
+11  chromedriver                        0x00000001013d5c04 cxxbridge1$str$ptr + 2218624
+12  chromedriver                        0x000000010141bd60 cxxbridge1$str$ptr + 2505692
+13  chromedriver                        0x000000010141bedc cxxbridge1$str$ptr + 2506072
+14  chromedriver                        0x000000010142ac6c cxxbridge1$str$ptr + 2566888
+15  libsystem_pthread.dylib             0x0000000183d802e4 _pthread_start + 136
+16  libsystem_pthread.dylib             0x0000000183d7b0fc thread_start + 8
+
+2025-01-25 20:19:49,437 - ERROR - Unable to verify login. Exiting...
+2025-01-25 20:30:10,026 - INFO - ====== WebDriver manager ======
+2025-01-25 20:30:10,157 - INFO - Get LATEST chromedriver version for google-chrome
+2025-01-25 20:30:10,404 - INFO - Get LATEST chromedriver version for google-chrome
+2025-01-25 20:30:10,653 - INFO - Driver [/Users/arttheache/.wdm/drivers/chromedriver/mac64/132.0.6834.110/chromedriver-mac-arm64/chromedriver] found in cache
+2025-01-25 20:30:16,881 - INFO - Cookies loaded successfully.
+2025-01-25 20:30:32,888 - INFO - Login successful as the profile icon is displayed.
+2025-01-25 20:30:36,923 - INFO - Login successful as the profile icon is displayed.
+2025-01-25 20:31:50,079 - INFO - Script interrupted. Shutting down...
+2025-01-25 20:31:50,080 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ConnectionResetError(54, 'Connection reset by peer')': /session/5dce665c21577ffefddd96753cdcf40b
+2025-01-25 20:31:50,081 - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x1077c3610>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/5dce665c21577ffefddd96753cdcf40b
+2025-01-25 20:31:50,082 - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x1077c3ed0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/5dce665c21577ffefddd96753cdcf40b
+2025-01-25 20:31:50,499 - INFO - ====== WebDriver manager ======
+2025-01-25 20:31:50,620 - INFO - Get LATEST chromedriver version for google-chrome
+2025-01-25 20:31:50,918 - INFO - Get LATEST chromedriver version for google-chrome
+2025-01-25 20:31:51,162 - INFO - Driver [/Users/arttheache/.wdm/drivers/chromedriver/mac64/132.0.6834.110/chromedriver-mac-arm64/chromedriver] found in cache
+2025-01-25 20:31:56,141 - INFO - Cookies loaded successfully.
+2025-01-25 20:32:08,468 - INFO - Login successful as the profile icon is displayed.
+2025-01-25 20:32:13,527 - INFO - Login successful as the profile icon is displayed.
+2025-01-25 20:32:13,527 - INFO - Scheduling the job to run every 2 hours...
+2025-01-25 20:32:13,527 - INFO - Scheduling scrolling every 5-7 minutes...
+2025-01-25 20:32:26,661 - INFO - Script interrupted. Shutting down...
+2025-01-25 20:32:26,662 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ConnectionResetError(54, 'Connection reset by peer')': /session/b8e7c3ab2a41ebf1ddae7ce76aa67bdd
+2025-01-25 20:32:26,663 - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10660f610>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/b8e7c3ab2a41ebf1ddae7ce76aa67bdd
+2025-01-25 20:32:26,664 - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10660fed0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/b8e7c3ab2a41ebf1ddae7ce76aa67bdd
+2025-01-25 20:33:06,299 - INFO - ====== WebDriver manager ======
+2025-01-25 20:33:06,422 - INFO - Get LATEST chromedriver version for google-chrome
+2025-01-25 20:33:06,684 - INFO - Get LATEST chromedriver version for google-chrome
+2025-01-25 20:33:06,953 - INFO - Driver [/Users/arttheache/.wdm/drivers/chromedriver/mac64/132.0.6834.110/chromedriver-mac-arm64/chromedriver] found in cache
+2025-01-25 20:33:11,606 - INFO - Cookies loaded successfully.
+2025-01-25 20:33:21,324 - INFO - Login successful as the profile icon is displayed.
+2025-01-25 20:33:27,009 - INFO - Login successful as the profile icon is displayed.
+2025-01-25 20:33:27,009 - INFO - Processing source: https://www.zdnet.com/topic/artificial-intelligence/
+2025-01-25 20:33:27,009 - INFO - Scraping https://www.zdnet.com/topic/artificial-intelligence/...
+2025-01-25 20:33:35,323 - INFO - Title: Artificial Intelligence | ZDNET
+2025-01-25 20:33:38,639 - INFO - Navigating to tweet box...
+2025-01-25 20:33:47,745 - INFO - Tweet posted successfully!
+2025-01-25 20:33:51,447 - INFO - Article posted successfully! Sleeping for 745.2319528854451 seconds...
+2025-01-25 20:33:57,062 - INFO - Script interrupted. Shutting down...
+2025-01-25 20:33:57,064 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ConnectionResetError(54, 'Connection reset by peer')': /session/a5611c8a4b20caf454c3161bb77ca8c3
+2025-01-25 20:33:57,064 - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10570f750>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/a5611c8a4b20caf454c3161bb77ca8c3
+2025-01-25 20:33:57,065 - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10570fed0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/a5611c8a4b20caf454c3161bb77ca8c3
