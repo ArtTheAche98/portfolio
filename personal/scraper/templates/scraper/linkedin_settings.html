@@ -1,0 +1,64 @@
+{% extends 'scraper/layout.html' %}
+{% load static %}
+
+{% block title %}LinkedIn Settings{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-header">
+                <h2>LinkedIn Integration Settings</h2>
+            </div>
+            <div class="card-body">
+                <!-- Debug Info Section -->
+                {% if debug %}
+                <div class="alert alert-info mb-3">
+                    <h5>Configuration Status:</h5>
+                    <ul class="list-unstyled">
+                        <li>Client ID: {% if settings.LINKEDIN_CLIENT_ID %}✅ Configured{% else %}❌ Missing{% endif %}</li>
+                        <li>Client Secret: {% if settings.LINKEDIN_CLIENT_SECRET %}✅ Configured{% else %}❌ Missing{% endif %}</li>
+                        <li>Redirect URI: {{ settings.LINKEDIN_REDIRECT_URI }}</li>
+                    </ul>
+                </div>
+                {% endif %}
+
+                {% if settings.LINKEDIN_CLIENT_ID and settings.LINKEDIN_CLIENT_SECRET %}
+                    {% if user.userprofile.linkedin_token %}
+                        <div class="alert alert-success mb-4">
+                            <i class="bi bi-check-circle-fill"></i> Your LinkedIn account is connected
+                            {% if user.userprofile.linkedin_user_id %}
+                                <br>
+                                <small>LinkedIn User ID: {{ user.userprofile.linkedin_user_id }}</small>
+                            {% endif %}
+                        </div>
+                        <form method="post" action="{% url 'remove_linkedin' %}" class="mb-4">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">
+                                <i class="bi bi-link-break"></i> Disconnect LinkedIn Account
+                            </button>
+                        </form>
+                    {% else %}
+                        <div class="alert alert-info mb-4">
+                            <i class="bi bi-info-circle-fill"></i> Connect your LinkedIn account to enable automatic posting
+                        </div>
+                        <a href="{% url 'linkedin_auth' %}" class="btn btn-primary mb-4">
+                            <i class="bi bi-linkedin"></i> Connect LinkedIn Account
+                        </a>
+                    {% endif %}
+                {% else %}
+                    <div class="alert alert-warning">
+                        <i class="bi bi-exclamation-triangle"></i> 
+                        LinkedIn API credentials are not properly loaded. Please check your .env file configuration:
+                        <hr>
+                        <pre class="mt-2">
+# In your .env file:
+LINKEDIN_CLIENT_ID='your_client_id_here'
+LINKEDIN_CLIENT_SECRET='your_client_secret_here'</pre>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
