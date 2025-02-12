@@ -1,0 +1,43 @@
+version: "3.9"
+
+x-common-settings: &common-settings
+  build: .
+  volumes:
+    - .:/app
+  env_file: .env
+  depends_on:
+    - redis
+  environment:
+    - CELERY_BROKER_URL=redis://redis:6379/0
+    - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    - REDIS_URL=redis://redis:6379/1
+  restart: unless-stopped
+
+services:
+  web:
+    <<: *common-settings
+    command: >
+      bash -c "python manage.py migrate &&
+               python manage.py collectstatic --noinput &&
+               gunicorn personal.wsgi:application --bind 0.0.0.0:8000"
+    ports:
+      - "8000:8000"
+
+  celery:
+    <<: *common-settings
+    command: celery -A personal worker --loglevel=info
+
+  celery-beat:
+    <<: *common-settings
+    command: celery -A personal beat --loglevel=info --scheduler django_celery_beat.schedulers:DatabaseScheduler
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+
+volumes:
+  redis_data:
