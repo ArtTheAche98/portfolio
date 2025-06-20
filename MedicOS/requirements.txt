@@ -1,0 +1,9 @@
+Django==4.2.9
+python-dotenv
+requests
+boto3
+djangorestframework
+psycopg2-binary
+whitenoise
+gunicorn
+django-cryptography==1.1

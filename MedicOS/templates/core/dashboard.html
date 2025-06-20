@@ -1,0 +1,67 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="mb-6">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div class="bg-blue-100 p-4 rounded-lg">
+            <h3 class="font-bold text-blue-700">Total Patients</h3>
+            <p class="text-2xl">{{ patients.count }}</p>
+        </div>
+        <div class="bg-yellow-100 p-4 rounded-lg">
+            <h3 class="font-bold text-yellow-700">Active Medications</h3>
+            <p class="text-2xl">{{ total_medications }}</p>
+        </div>
+        <div class="bg-red-100 p-4 rounded-lg">
+            <h3 class="font-bold text-red-700">Interaction Alerts</h3>
+            <p class="text-2xl">{{ interaction_alerts }}</p>
+        </div>
+    </div>
+
+    {% if recent_interactions %}
+    <div class="bg-red-50 p-4 rounded-lg mb-6">
+        <h2 class="text-lg font-bold text-red-700 mb-2">Recent Interaction Alerts</h2>
+        <ul class="divide-y divide-red-200">
+            {% for interaction in recent_interactions %}
+            <li class="py-2">
+                <span class="font-semibold">{{ interaction.medications.all|join:", " }}</span>
+                <p class="text-sm text-red-600">{{ interaction.description }}</p>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {% for patient in patients %}
+        <div class="bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow">
+            <h2 class="text-xl font-bold">{{ patient.name }}</h2>
+            <p class="text-gray-600">DOB: {{ patient.date_of_birth }}</p>
+            <p class="text-gray-600">Medications: {{ patient.medication_set.count }}</p>
+            {% if patient.has_interactions %}
+            <div class="mt-2">
+                <span class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded">
+                    ⚠️ Interactions Detected
+                </span>
+            </div>
+            {% endif %}
+            <div class="mt-4 flex space-x-2">
+                <a href="{% url 'core:patient_detail' patient.pk %}" 
+                   class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                    View Details
+                </a>
+                <a href="{% url 'core:add_medication' patient.pk %}"
+                   class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+                    Add Medication
+                </a>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-span-3 text-center py-8 text-gray-500">
+            No patients found. Start by adding a new patient.
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
